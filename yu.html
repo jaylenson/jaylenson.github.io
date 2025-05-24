@@ -143,6 +143,27 @@
       z-index: 100; /* Ensure it's above other elements if necessary */
       font-family: "Noto Serif TC", serif;
     }
+    .back-home {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #cdeac0; /* 可以自行調整 */
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #2e5c2e;
+  text-decoration: none;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  z-index: 99;
+  transition: background-color 0.3s ease;
+}
+
+.back-home:hover {
+  background-color: #a8dba8;
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
