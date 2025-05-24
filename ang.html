@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄤ韻國字表（分級）</title>
+  <style>
+    body {
+      background-color: #FFE5E0;
+      color: #880E4F;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+      position: relative;
+    }
+    h1 {
+      color: #C21807;
+      font-size: 2.8em;
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      color: #B71C1C;
+      margin-top: 2em;
+      font-size: 2em;
+    }
+    .nav-buttons {
+      margin-bottom: 2em;
+    }
+    .nav-buttons button {
+      background-color: #F8BBD0;
+      color: #880E4F;
+      border: none;
+      padding: 0.5em 1em;
+      margin: 0.2em;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .nav-buttons button:hover {
+      background-color: #F48FB1;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 1100px;
+      background-color: #FFCDD2;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(136, 14, 79, 0.3);
+      margin-top: 1em;
+    }
+    td {
+      border: 1px solid #EF9A9A;
+      background-color: #FFEBEE;
+      color: #880E4F;
+      padding: 1em;
+      font-size: 1.6em;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: text;
+    }
+    td:hover {
+      background-color: #FF8A80;
+      transform: scale(1.1);
+    }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #D32F2F;
+      padding: 1em 2em;
+      border-radius: 10px;
+      color: white;
+      display: none;
+      font-size: 1.4em;
+      z-index: 999;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #F06292;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2em;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    .back-button {
+      margin-top: 1em;
+      background-color: #F8BBD0;
+      color: #880E4F;
+      border: none;
+      padding: 0.5em 1em;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: #F48FB1;
+    }
+    a {
+      display: inline-block;
+      margin-top: 2em;
+      text-decoration: none;
+      color: #B71C1C;
+      font-size: 1.2em;
+    }
+    a:hover {
+      color: #D32F2F;
+    }
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* Positioned in bottom-left corner */
+      background-color: #FFCDD2;
+      color: #880E4F;
+      padding: 0.6em 1.2em;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #EF9A9A;
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="top">ㄤ韻國字表（分級）</h1>
+
+  <div class="nav-buttons">
+    <button onclick="scrollToSection('level1')">等級一</button>
+    <button onclick="scrollToSection('level2')">等級二</button>
+    <button onclick="scrollToSection('level3')">等級三</button>
+    <button onclick="scrollToSection('level4')">等級四</button>
+    <button onclick="scrollToSection('level5')">等級五</button>
+  </div>
+
+  <div id="popup" class="popup"></div>
+  <div id="tables"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+
+  <button class="back-to-top" onclick="scrollToSection('top')">↑</button>
+
+  <a href="index.html">回首頁</a>
+  <a href="https://sutian.moe.edu.tw/zh-hant/su/5365/">意見不同，迅速抹紅</a>
+
+  <script>
+    const data = {
+      "等級一：極常用": "放 當 兩 光 行 黃 江 將 講 強 想 向 相 像 張 長 上 讓 藏 樣 王 忘 望 方 房 黨 湯 糖 堂 娘 良 涼 梁 量 亮 輛 剛 鋼 港 廣 康 抗 狂 況 航 獎 槍 牆 搶 箱 香 鄉 享 響 項 象 章 帳 裝 狀 常 場 廠 唱 窗 床 創 商 傷 雙 髒 倉 蒼 桑 喪 央 洋 揚 陽 養 網 往",
+      "等級二：很常用": "幫 榜 棒 旁 胖 忙 盲 訪 擋 蕩 躺 燙 釀 囊 郎 狼 廊 朗 浪 岡 崗 逛 慷 框 礦 荒 慌 皇 煌 謊 晃 漿 醬 腔 嗆 祥 翔 詳 降 掌 仗 杖 脹 賬 障 妝 莊 樁 撞 昌 償 腸 敞 暢 瘡 闖 賞 爽 葬 艙 嗓 殃 秧 仰 氧 癢 汪 亡 枉 旺 仿 彷 紡 判 膀 龐",
+      "等級三：常用": "邦 梆 傍 綁 磅 謗 蚌 乓 徬 螃 茫 芒 氓 蟒 莽 坊 枋 芳 妨 肪 舫 噹 襠 鐺 盪 塘 搪 螗 醣 棠 膛 螳 倘 淌 趟 孃 囔 琅 瑯 榔 螂 晾 諒 肛 缸 槓 胱 獷 糠 扛 亢 伉 炕 眶 筐 誆 夯 沆 肓 凰 惶 徨 隍 遑 蝗 潢 磺 簧 恍 幌 姜 僵 殭 薑 疆 韁 蔣 槳 匠 羌 鏘 蹌 鎗 嬙 檣 薔 襁 湘 廂 襄 鑲 庠 餉 饗 巷 橡 嚮 漳 彰 獐 璋 樟 蟑 幛 瘴 僮 倡 猖 娼 菖 鯧 徜 嘗 嫦 嚐 昶 悵 囪 幢 愴 殤 觴 裳 霜 孀 瀧 攘 嚷 壤 臧 贓 奘 臟 傖 滄 泱 鞅 鴦 佯 徉 烊 煬 楊 瘍 恙 漾 昂 盎",
+      "等級四：次常用": "蒡 篣 宕 帑 喨 踉 鏹 嬙 檣 薔 襁 鑲 驤 庠 饗 嚮 漳 獐 璋 蟑 嶂 幛 瘴 僮 猖 娼 菖 鯧 倀 徜 嫦 嚐 昶 囪 幢 愴 殤 觴 孀 瀧 攘 禳 奘 傖 泱 鞅 鴦 佯 徉 烊 煬 瘍 輞 骯",
+      "等級五：少用/罕用": "鏹 驤 禳 輞"
+    };
+
+    const tableContainer = document.getElementById('tables');
+    const charCounter = document.getElementById('charCounter');
+
+    function createTable(title, chars, id) {
+      const section = document.createElement('section');
+      section.id = id;
+      section.innerHTML = `<h2>${title}</h2><table><tr>` + 
+        chars.split(' ').map((c, i) => {
+          const cell = `<td onclick="speak('${c}')">${c}</td>`;
+          return (i + 1) % 10 === 0 ? cell + '</tr><tr>' : cell;
+        }).join('') + '</tr></table>' +
+        `<button class="back-button" onclick="scrollToSection('top')">回頂部</button>`;
+      tableContainer.appendChild(section);
+    }
+
+    function updateCharCounter() {
+      const totalChars = Object.values(data).reduce((sum, chars) => sum + chars.split(' ').length, 0);
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    Object.entries(data).forEach(([title, chars], index) => {
+      createTable(title, chars, `level${index + 1}`);
+    });
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+      const popup = document.getElementById('popup');
+      popup.innerText = `正在發音：「${char}」`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 1000);
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initial counter update
+    updateCharCounter();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ㄓㄔㄕㄖㄗㄘㄙ韻國字表</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff6f61, #ff9a8b, #f5b7b1);
+      color: #3e2a47;
+      font-family: "Noto Serif TC", serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #b93d3d;
+    }
+
+    .roaring-lion {
+      margin: 20px auto 20px;
+      font-size: 34px;
+      font-family: 'Black Han Sans', 'Noto Sans TC', sans-serif;
+      font-weight: 900;
+      text-align: center;
+      color: #ffcc00;
+      text-shadow:
+        1px 1px 0 #880000,
+        2px 2px 0 #660000,
+        0 0 12px rgba(255, 80, 0, 0.6),
+        0 0 20px rgba(255, 120, 0, 0.3);
+      letter-spacing: 6px;
+      animation: glowRoar 2.5s infinite alternate ease-in-out;
+    }
+
+    .roaring-lion a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @keyframes glowRoar {
+      0% {
+        transform: scale(1);
+        text-shadow:
+          1px 1px 0 #550000,
+          2px 2px 0 #220000,
+          0 0 10px rgba(255, 60, 0, 0.4);
+      }
+      100% {
+        transform: scale(1.08);
+        text-shadow:
+          1px 1px 0 #880000,
+          2px 2px 0 #660000,
+          0 0 16px rgba(255, 120, 0, 0.8);
+      }
+    }
+
+    .lion-img {
+      width: 150px;
+      margin: 10px auto 30px;
+      display: block;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      background-color: #ffe6e6;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      border: 1px solid #f1b0b0;
+      padding: 12px;
+      font-size: 18px;
+      width: 10%;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      color: #3e2a47;
+    }
+
+    td:hover {
+      background-color: #f1b0b0;
+      transform: scale(1.1);
+    }
+
+    a.nav-link {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #d1646d;
+    }
+
+    a.nav-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* Positioned in bottom-left corner */
+      background-color: #ffe6e6; /* Matches table background */
+      color: #3e2a47; /* Matches text color */
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: "Noto Serif TC", serif;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+      border: 1px solid #f1b0b0; /* Matches table border */
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ㄓㄔㄕㄖㄗㄘㄙ韻 國字集</h1>
+
+  <div class="roaring-lion">
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/2500/">四十四隻石獅子</a>
+  </div>
+
+  <table>
+    <tbody>
+      <!-- JS will insert content here -->
+    </tbody>
+  </table>
+
+  <div class="char-counter" id="charCounter">總字數：0</div>
+  <a class="nav-link" href="index.html">回首頁</a>
+
+  <audio id="lionRoar" src="lion-roar.mp3" preload="auto"></audio>
+
+  <script>
+    const characters = `之,是,十,日,子,四,時,只,事,此,知,指,實,史,使,市,式,試,世,治,制,製,智,志,字,自,資,次,死,詞,思,私,施,室,視,示,失,石,食,紙,止,直,值,置,至,致,持,吃,質,識,師,什,差,似,職,執,支,枝,池,遲,尺,絲,獅,詩,濕,溼,拾,駛,始,士,仕,氏,侍,恃,逝,勢,飾,適,釋,姿,茲,滋,仔,紫,雌,祠,瓷,慈,磁,辭,刺,司,寺,伺,飼,肆,賜,址,趾,旨,祗,祇,織,植,殖,峙,稚,滯,齒,赤,翅,汁,隻,脂,矢,柿,誓,斯,芝,吱,胝,蜘,侄,姪,擲,躑,芷,咫,酯,窒,蛭,輊,緻,痣,誌,秩,炙,痔,雉,摯,幟,躓,喫,痴,弛,馳,匙,呎,侈,恥,褫,叱,斥,熾,尸,屍,虱,蝨,蒔,屎,軾,弒,嗜,噬,諡,孜,諮,孳,緇,錙,籽,梓,滓,恣,眥,漬,疵,廝,撕,嘶,鷥,巳,汜,祀,嗣,蝕`.split(',');
+
+    const perRow = 10;
+    const tbody = document.querySelector("table tbody");
+    const charCounter = document.getElementById('charCounter');
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    function updateCharCounter() {
+      const totalChars = characters.length;
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    for (let i = 0; i < characters.length; i += perRow) {
+      const row = document.createElement("tr");
+      for (let j = 0; j < perRow; j++) {
+        const char = characters[i + j];
+        const cell = document.createElement("td");
+        if (char) {
+          cell.textContent = char;
+          cell.addEventListener("click", () => speak(char));
+        }
+        row.appendChild(cell);
+      }
+      tbody.appendChild(row);
+    }
+
+    // 獅吼音效進場
+    window.addEventListener("DOMContentLoaded", () => {
+      const roar = document.getElementById("lionRoar");
+      setTimeout(() => {
+        roar.play().catch(e => console.warn("音效無法播放", e));
+      }, 500); // 延遲播放以避免自動播放限制
+      updateCharCounter(); // Initialize counter
+    });
+  </script>
+</body>
+</html>

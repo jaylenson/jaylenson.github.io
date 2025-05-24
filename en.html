@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄣ韻國字表</title>
+  <style>
+    body {
+      background-color: #ECEFF1;
+      color: #37474F;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    h1 {
+      color: #455A64;
+      margin-bottom: 1em;
+      font-size: 2.5em;
+    }
+    .level-title {
+      font-size: 1.8em;
+      color: #546E7A;
+      margin: 1em 0 0.5em;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 1200px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: #CFD8DC;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2em;
+    }
+    td {
+      border: 1px solid #B0BEC5;
+      background-color: #ECEFF1;
+      color: #37474F;
+      padding: 1em;
+      font-size: 1.5em;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: text;
+    }
+    td:hover {
+      background-color: #B0BEC5;
+      transform: scale(1.1);
+    }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #90A4AE;
+      padding: 1em 2em;
+      border: 2px solid #ECEFF1;
+      border-radius: 10px;
+      font-size: 1.4em;
+      display: none;
+      z-index: 999;
+      color: #fff;
+    }
+    a {
+      display: inline-block;
+      margin-top: 1em;
+      text-decoration: none;
+      color: #455A64;
+      font-size: 1.2em;
+    }
+    a:hover {
+      color: #90A4AE;
+    }
+    .scroll-button {
+      background-color: #90A4AE;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .scroll-button:hover {
+      background-color: #78909C;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #90A4AE;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .back-to-top:hover {
+      background-color: #78909C;
+    }
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* Positioned in bottom-left corner */
+      background-color: #CFD8DC;
+      color: #37474F;
+      padding: 0.6em 1.2em;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #B0BEC5;
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>ㄣ韻國字表</h1>
+
+  <!-- 滾動按鈕 -->
+  <div>
+    <button class="scroll-button" onclick="scrollToLevel('level1')">等級一</button>
+    <button class="scroll-button" onclick="scrollToLevel('level2')">等級二</button>
+    <button class="scroll-button" onclick="scrollToLevel('level3')">等級三</button>
+    <button class="scroll-button" onclick="scrollToLevel('level4')">等級四</button>
+  </div>
+
+  <div id="tablesContainer"></div>
+  <div class="popup" id="popup"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+
+  <a href="index.html">回首頁</a><br/>
+  <a href="https://sutian.moe.edu.tw/zh-hant/su/10875/"> 💥奧運可以首金🏅，🌟在家裡可以好好守銀🔫</a>
+
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()">回到頂部</button>
+
+  <script>
+    const levels = {
+      "等級一：極常用": "本,門,們,民,分,份,林,臨,論,根,跟,很,今,金,近,進,盡,君,軍,親,心,新,信,真,鎮,陳,春,身,深,神,人,認,任,怎,尊,村,存,寸,森,孫,因,音,銀,引,飲,隱,印,溫,文,聞,問,雲,運,恩,您,品",
+      "等級二：很常用": "奔,笨,賓,噴,盆,拚,貧,頻,聘,悶,敏,紛,墳,粉,憤,奮,敦,頓,盾,吞,屯,嫩,淋,輪,滾,棍,肯,啃,墾,懇,坤,昆,捆,困,睏,痕,狠,恨,昏,婚,魂,混,巾,斤,津,筋,禁,僅,謹,緊,儘,錦,均,鈞,俊,郡,侵,欽,秦,琴,勤,禽,寢,群,芯,辛,薪,詢,巡,循,尋,迅,訊,訓,珍,貞,偵,針,診,振,陣,准,準,臣,沉,晨,塵,襯,純,順,申,伸,審,腎,慎,忍,潤,樽,筍,茵,陰,穩,吻,暈,允,孕,韻,嗯",
+      "等級三：常用": "苯,畚,彬,斌,濱,檳,繽,蘋,嬪,捫,燜,泯,抿,閔,憫,閩,吩,芬,氛,糞,墩,燉,盹,沌,飩,鈍,噸,遁,囤,豚,臀,褪,琳,霖,鄰,稟,吝,賃,倫,淪,掄,崙,綸,哏,崑,綑,渾,衿,觔,襟,瑾,浸,晉,噤,燼",
+      "等級四：少用": "儐,瀕,殯,鬢,魨,嶙,燐,瞵,藺,鯤,餛,諢"
+    };
+
+    const container = document.getElementById('tablesContainer');
+    const charCounter = document.getElementById('charCounter');
+
+    function updateCharCounter() {
+      const totalChars = Object.values(levels).reduce((sum, chars) => sum + chars.split(',').length, 0);
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    function generateTables() {
+      for (const level in levels) {
+        const chars = levels[level].split(',');
+        const levelTitle = document.createElement('div');
+        levelTitle.className = 'level-title';
+
+        // 生成英文數字 id 方便滾動
+        let id = '';
+        if (level.includes('一')) id = 'level1';
+        else if (level.includes('二')) id = 'level2';
+        else if (level.includes('三')) id = 'level3';
+        else if (level.includes('四')) id = 'level4';
+
+        levelTitle.textContent = level;
+        levelTitle.id = id;
+
+        const table = document.createElement('table');
+        let row;
+
+        chars.forEach((char, index) => {
+          if (index % 10 === 0) {
+            row = document.createElement('tr');
+            table.appendChild(row);
+          }
+          const cell = document.createElement('td');
+          cell.textContent = char;
+          cell.onclick = () => speak(char);
+          row.appendChild(cell);
+        });
+
+        const backToTopButton = document.createElement('button');
+        backToTopButton.textContent = '回到頂部';
+        backToTopButton.className = 'scroll-button';
+        backToTopButton.onclick = () => scrollToTop();
+
+        container.appendChild(levelTitle);
+        container.appendChild(table);
+        container.appendChild(backToTopButton);
+      }
+    }
+
+    function scrollToLevel(level) {
+      const element = document.getElementById(level);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    generateTables();
+    updateCharCounter();
+  </script>
+</body>
+</html>

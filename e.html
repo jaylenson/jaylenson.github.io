@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ㄜ韻國字展示</title>
+  <style>
+    body {
+      background-color: #fff8dc;
+      color: #333;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+      position: relative;
+    }
+    h1 {
+      color: #8D6E63;
+      font-size: 2.8em;
+      margin-bottom: 1em;
+      position: relative;
+      z-index: 1;
+    }
+    #condom-link {
+      position: absolute;
+      right: 2em;
+      top: 2.2em;
+      background-color: #ff69b4;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-decoration: none;
+      animation: blink 1.5s infinite alternate, bounce 2s infinite;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+    }
+    #condom-link:hover {
+      background-color: #e91e63;
+      transform: scale(1.1);
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      box-shadow: 0 0 15px rgba(93, 64, 55, 0.3);
+      background-color: #FFF8E1;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    td {
+      border: 1px solid #d4af37;
+      padding: 0.8em;
+      font-size: 1.5em;
+      cursor: pointer;
+      background-color: #fffacd;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: text;
+      width: 80px;
+      height: 80px;
+    }
+    td:hover {
+      background-color: #f0e68c;
+      transform: scale(1.05);
+    }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #fdf5e6;
+      padding: 1em 2em;
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      font-size: 1.2em;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ㄜ韻國字表</h1>
+  <a id="condom-link" href="https://sutian.moe.edu.tw/zh-hant/su/9224/" target="_blank">
+    💖 樂活保險套餐 💖
+  </a>
+
+  <table id="charTable"></table>
+  <div class="popup" id="popup"></div>
+
+  <a href="index.html">回首頁</a><br>
+  <div id="counter" style="
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 10px 16px;
+  border: 1px solid #ffeeba;
+  border-radius: 10px;
+  font-size: 1em;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  z-index: 999;">
+  總字數：0
+</div>
+
+
+  <script>
+    const characters = "了,得,這,個,和,麼,車,可,者,各,呢,合,社,特,格,客,科,哥,歌,河,核,舍,舌,蛇,熱,責,則,策,色,俄,額,惡,餓,樂,賀,撤,澈,哲,折,涉,設,攝,赫,鶴,蛾,蛤,葛,咳,殼,嗑,呵,嗝,閣,閤,閡,涸,褐,盍,闔,貉,蔗,澤,嘖,擇,仄,冊,側,測,廁,惻,圾,瑟,嗇,穡,澀,訛,噁,扼,呃,軛,愕,鄂,顎,遏,噩,鱷,忑,訥,垃,戈,疙,胳,擱,割,鴿,珂,柯,苛,蚵,軻,蝌,棵,顆,磕,瞌,剋,課,奢,賒,捨,拾,射,麝,赦,遮,螫,蜇,輒,摺,褶,謫,轍,懾,扯".split(",");
+
+    const table = document.getElementById("charTable");
+    const popup = document.getElementById("popup");
+
+    function getZhuyinData(char) {
+      // 模擬資料，可替換為真實查詢
+      return {
+        "聲母": "g",
+        "介音": "",
+        "韻母": "e",
+        "聲調": "4"
+      };
+    }
+
+    function showPopup(char) {
+      const data = getZhuyinData(char);
+      popup.innerHTML = `【${char}】<br>聲母：${data.聲母}　介音：${data.介音}　韻母：${data.韻母}　聲調：${data.聲調}`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 3000);
+    }
+
+    function playAudio(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    let row;
+    characters.forEach((char, index) => {
+      if (index % 8 === 0) {
+        row = table.insertRow();
+      }
+      const cell = row.insertCell();
+      cell.textContent = char;
+      cell.onclick = () => {
+        playAudio(char);
+        showPopup(char);
+      };
+    });
+    const counter = document.getElementById("counter");
+counter.textContent = `總字數：${characters.length}`;
+
+  </script>
+
+</body>
+</html>

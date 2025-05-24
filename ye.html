@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄝ 韻 國字表</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      color: #333;
+      font-family: "Noto Serif TC", serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      background-color: #ffffff;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 14px;
+      font-size: 22px;
+      width: 10%;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    td:hover {
+      background-color: #f0f0f0;
+    }
+
+    .info-row td {
+      font-size: 16px;
+      background-color: #eef3f8;
+      color: #333;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #337ab7;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #23527c;
+    }
+    .title-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.jimmy-link {
+  position: absolute;
+  top: -10px;
+  right: -200px;
+  background: #ffebee;
+  color: #c62828;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid #ffc107;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+  animation: bounceFlash 1.4s infinite;
+  font-size: 15px;
+}
+
+.jimmy-link:hover {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  transform: scale(1.1) rotate(-2deg);
+  text-shadow: 1px 1px 2px #ff5252;
+}
+
+@keyframes bounceFlash {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 6px #ffc107;
+  }
+  50% {
+    transform: scale(1.08) rotate(1deg);
+    box-shadow: 0 0 16px #ff5722;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px #ffc107;
+  }
+}
+.counter-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #555;
+  z-index: 999;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <h1>ㄝ 韻 國字表</h1>
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/1850/" target="_blank" class="jimmy-link">超肌白湯拉麵 🍜🔥</a>
+  </div>
+  
+  <table>
+    <tbody id="char-table">
+      <!-- JS will insert content here -->
+    </tbody>
+  </table>
+
+  <a href="index.html">回首頁</a>
+  <div id="counter" class="counter-box"></div>
+
+
+  <script>
+    const characters = "解節學樂月結也說鐵街接業葉夜別借界切卻確缺寫謝些鞋跌疊頁約越覺決絕角貼滅爹姐介戒列協歇血野雪爺且獵烈裂劣皆階揭捷傑截屆掘雀斜諧卸械瀉穴閱岳悅躍粵捏碟蝶劫竭竊怯邪脅屑泄洩蟹靴薛椰耶液帖虐略藉闕愜睫茄削蠍懈腋曰爵訣嚼憋撇蔑喋諜孽聶躡鎳咧嗟詰桀婕偈櫛癤姊誡芥噘撅倔抉厥崛獗蕨蹶噱譎妾挈鍥篋瘸鵲偕楔邂榭褻褶鱈噎掖揶冶靨嶽咽涅臬瘧謔掠捩拮擷孑疥孓伽闋鱉蹩癟彆瞥咩衊篾嗲牒鰈鑷".split('');
+    const perRow = 10;
+    const tbody = document.getElementById("char-table");
+
+    const bopomofoMap = {
+      解: { initial: "ㄐ", medial: "ㄧ", final: "ㄝ", tone: "ˇ" },
+      節: { initial: "ㄐ", medial: "ㄧ", final: "ㄝ", tone: "ˊ" },
+      學: { initial: "ㄒ", medial: "ㄩ", final: "ㄝ", tone: "ˊ" },
+      樂: { initial: "ㄌ", medial: "", final: "ㄝ", tone: "ˋ" },
+      月: { initial: "ㄩ", medial: "", final: "ㄝ", tone: "ˋ" },
+      結: { initial: "ㄐ", medial: "ㄧ", final: "ㄝ", tone: "ˊ" },
+      // 🛠️ 這邊可以繼續補完整的注音資料！
+    };
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    function showInfo(char, index) {
+      const info = bopomofoMap[char];
+      const old = document.querySelector('.info-row');
+      if (old) old.remove();
+
+      if (!info) return;
+
+      const row = document.createElement("tr");
+      row.className = "info-row";
+      const emptyTdCount = index % perRow;
+      for (let i = 0; i < perRow; i++) {
+        const td = document.createElement("td");
+        if (i === emptyTdCount) {
+          td.innerHTML = `聲母：${info.initial || "-"}<br>介音：${info.medial || "-"}<br>韻母：${info.final}<br>聲調：${info.tone || "無"}`;
+        }
+        row.appendChild(td);
+      }
+      tbody.insertBefore(row, tbody.children[Math.floor(index / perRow) + 1]);
+    }
+
+    characters.forEach((char, index) => {
+      if (index % perRow === 0) {
+        tbody.appendChild(document.createElement("tr"));
+      }
+      const row = tbody.lastChild;
+      const cell = document.createElement("td");
+      cell.textContent = char;
+      cell.addEventListener("click", () => {
+        speak(char);
+        showInfo(char, index);
+      });
+      row.appendChild(cell);
+    });
+    // 顯示總字數
+const counterBox = document.getElementById("counter");
+counterBox.textContent = `總字數：${characters.length}`;
+
+  </script>
+
+</body>
+</html>

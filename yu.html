@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ㄩ韻國字表</title>
+  <style>
+    body {
+      background-color: #e6f7e1; /* 淺綠色背景 */
+      color: #2e5c2e; /* 深綠色文字 */
+      font-family: "Noto Serif TC", serif;
+      padding: 40px;
+      text-align: center;
+      position: relative; /* Added for positioning the counter */
+      min-height: 100vh; /* Ensure body takes full viewport height */
+      padding-bottom: 70px; /* Add padding to bottom to avoid overlap with counter */
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 30px;
+      color: #4c9e4c; /* 淡綠色標題 */
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 85%;
+      background-color: #f1f9f2; /* 淺綠色表格背景 */
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      border: 1px solid #b3d9b3; /* 淺綠色邊框 */
+      padding: 18px;
+      font-size: 24px;
+      width: 10%;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      color: #2e5c2e; /* 深綠色文字 */
+    }
+
+    td:hover {
+      background-color: #a8dba8; /* 淺綠色背景 */
+      transform: scale(1.1);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #5bbf5b; /* 綠色連結 */
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -1;
+      background-image:
+        url('https://i.imgur.com/oD0U2oB.png'),  /* 煙霧圖（可換） */
+        linear-gradient(135deg, #dfeee0, #d2e6d2);  /* 淺綠底色保留 */
+      background-size: 200% 200%;
+      background-repeat: no-repeat;
+      background-blend-mode: multiply;
+      opacity: 0.4;
+      filter: grayscale(30%) brightness(95%) contrast(85%);
+      animation: smogFloat 30s ease-in-out infinite;
+    }
+
+    @keyframes smogFloat {
+      0%   { background-position: 0% 0%; }
+      50%  { background-position: 50% 30%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    .polluted-banner {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-family: "Noto Serif TC", serif;
+      font-size: 15px;
+      padding: 10px 16px;
+      color: #2d2d2d;
+      background-color: rgba(207, 227, 207, 0.9);
+      border: 1px solid #666;
+      border-radius: 6px;
+      text-decoration: none;
+      z-index: 10;
+      box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+
+      background-image:
+        url('https://i.imgur.com/3UsPbMx.png'), /* 裂痕背景圖 */
+        linear-gradient(135deg, rgba(80,80,80,0.2), transparent 80%);
+      background-size: cover;
+      background-blend-mode: multiply;
+
+      filter: grayscale(40%) contrast(90%);
+      overflow: hidden;
+    }
+
+    .polluted-banner::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 30%;
+      width: 6px;
+      height: 12px;
+      background: #4caf50aa;
+      border-radius: 50%;
+      animation: teardrop 2.2s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes teardrop {
+      0%   { top: 100%; height: 6px; opacity: 0; }
+      20%  { top: 100%; height: 6px; opacity: 1; }
+      60%  { top: 120%; height: 20px; opacity: 0.7; }
+      100% { top: 140%; height: 30px; opacity: 0; }
+    }
+
+    .polluted-banner:hover {
+      background-color: rgba(180, 210, 180, 0.95);
+      transform: rotate(-1deg);
+      text-decoration: underline dotted #444;
+    }
+
+    /* Style for the character counter */
+    #char-counter {
+      position: fixed; /* Changed to fixed for consistent positioning */
+      bottom: 20px;
+      left: 20px;
+      font-size: 16px;
+      color: #2e5c2e; /* Deep green text, same as body */
+      background-color: rgba(241, 249, 242, 0.85); /* Light green background, slightly transparent */
+      padding: 8px 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 100; /* Ensure it's above other elements if necessary */
+      font-family: "Noto Serif TC", serif;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ㄩ 韻 國字集</h1>
+  <a class="polluted-banner" href="https://sutian.moe.edu.tw/zh-hant/su/10708/" target="_blank">
+    愛是一道光，綠到你發慌</a>
+
+  <table>
+    <tbody>
+      </tbody>
+  </table>
+
+  <a href="index.html">回首頁</a>
+
+  <div id="char-counter">總字數：0</div>
+
+  <script>
+    const characters = `去,取,女,區,具,句,居,巨,序,律,徐,於,旅,曲,欲,浴,率,玉,育,與,舉,緒,綠,羽,聚,蓄,虛,語,許,趣,趨,距,車,遇,雨,需,須,預,予,于,余,侶,侷,俞,俱,倨,咀,喻,噓,域,墟,妤,娛,娶,婿,嫗,宇,寓,局,屈,屢,履,嶇,嶼,庾,御,恤,愈,愉,愚,慮,慾,懼,戌,拒,拘,據,掬,揄,敘,旭,昱,枸,栩,桔,榆,橘,櫚,櫸,毓,氯,沮,淤,渝,渠,漁,濾,炬,煜,煦,熨,狙,獄,瑜,瘀,癒,矩,祛,禦,禹,竽,籲,紆,絮,縷,續,聿,腴,臾,芋,苣,莒,菊,蒟,虞,蛆,蛐,袪,裕,裾,褸,覦,覷,詡,諛,諭,譽,豫,踞,踰,踽,軀,輿,迂,逾,郁,酗,鈺,鉅,鋁,鋸,閭,隅,鞠`.split(',');
+
+    const perRow = 10;
+    const tbody = document.querySelector("table tbody");
+    const charCounterElement = document.getElementById("char-counter"); // Get the counter element
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW'; // 使用台灣中文
+      speechSynthesis.speak(utterance);
+    }
+
+    // Function to update character count
+    function updateCharCount() {
+      // Filter out any empty strings that might result from trailing commas or empty entries
+      const validCharacters = characters.filter(char => char.trim() !== "");
+      charCounterElement.textContent = `總字數：${validCharacters.length}`;
+    }
+
+    // Fill the table
+    function populateTable() {
+      tbody.innerHTML = ''; // Clear existing rows if any (for potential future dynamic updates)
+      for (let i = 0; i < characters.length; i += perRow) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < perRow; j++) {
+          const char = characters[i + j];
+          const cell = document.createElement("td");
+          if (char) {
+            cell.textContent = char;
+            cell.addEventListener("click", () => speak(char));
+          }
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+      }
+      updateCharCount(); // Update count after populating table
+    }
+
+    // Initial population and count
+    populateTable();
+
+    // Example of how it might dynamically change (for demonstration)
+    // setTimeout(() => {
+    //   characters.push("新");
+    //   characters.push("字");
+    //   populateTable(); // Repopulate table and update count
+    // }, 5000);
+
+    // setTimeout(() => {
+    //   characters.pop();
+    //   characters.pop();
+    //   populateTable(); // Repopulate table and update count
+    // }, 10000);
+
+  </script>
+
+</body>
+</html>

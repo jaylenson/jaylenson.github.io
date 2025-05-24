@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄠ韻國字表</title>
+  <style>
+    body {
+      background-color: #222;
+      color: #eee;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    h1 {
+      color: #fff;
+      margin-bottom: 0.3em;
+      font-size: 2.5em;
+    }
+    .subtitle {
+      margin-bottom: 2em;
+      font-size: 1.1em;
+      color: #ccc;
+    }
+    .subtitle a {
+      color: #ccc;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 0.5em;
+    }
+    .subtitle a:hover {
+      color: #ffd54f;
+    }
+    .level-buttons {
+      margin-bottom: 2em;
+    }
+    .level-buttons button {
+      margin: 0.5em;
+      padding: 0.5em 1em;
+      background-color: #444;
+      color: #ffd54f;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .level-buttons button:hover {
+      background-color: #666;
+    }
+    table {
+      margin: 2em auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1100px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+    td {
+      border: 1px solid #555;
+      background-color: #333;
+      color: #eee;
+      padding: 1em;
+      font-size: 1.8em;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: text;
+    }
+    td:hover {
+      background-color: #555;
+      transform: scale(1.05);
+      color: #ffd54f;
+    }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      padding: 1em 2em;
+      border: 2px solid #ffd54f;
+      border-radius: 10px;
+      font-size: 1.4em;
+      display: none;
+      z-index: 999;
+      color: #ffd54f;
+    }
+    .back-to-top {
+      display: inline-block;
+      margin: 2em auto;
+      padding: 0.5em 1em;
+      background-color: #555;
+      color: #ffd54f;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .back-to-top:hover {
+      background-color: #777;
+    }
+    a {
+      display: inline-block;
+      margin-top: 2em;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 1.2em;
+    }
+    a:hover {
+      color: #ffd54f;
+    }
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #eee;
+      padding: 0.8em 1.5em;
+      border-radius: 8px;
+      font-size: 1.2em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #555;
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="top">ㄠ韻國字表</h1>
+  <div class="subtitle">
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/10619/" target="_blank">
+      戴假髮前髮網要帶灰色的，才不會在做造型時露出真髮...為什麼呢？
+    </a><a href="ㄨ.html">（答案請看ㄨ韻）</a>
+  </div>
+
+  <div class="level-buttons">
+    <button onclick="scrollToLevel('level1')">等級 1</button>
+    <button onclick="scrollToLevel('level2')">等級 2</button>
+    <button onclick="scrollToLevel('level3')">等級 3</button>
+    <button onclick="scrollToLevel('level4')">等級 4</button>
+    <button onclick="scrollToLevel('level5')">等級 5</button>
+  </div>
+
+  <div id="level1"></div>
+  <h2>等級一：極常用 (Extremely Common)</h2>
+  <table id="level1Table"></table>
+  <button class="back-to-top" onclick="scrollToTop()">回頂部</button>
+
+  <div id="level2"></div>
+  <h2>等級二：很常用 (Very Common)</h2>
+  <table id="level2Table"></table>
+  <button class="back-to-top" onclick="scrollToTop()">回頂部</button>
+
+  <div id="level3"></div>
+  <h2>等級三：常用 (Common)</h2>
+  <table id="level3Table"></table>
+  <button class="back-to-top" onclick="scrollToTop()">回頂部</button>
+
+  <div id="level4"></div>
+  <h2>等級四：次常用 (Less Common)</h2>
+  <table id="level4Table"></table>
+  <button class="back-to-top" onclick="scrollToTop()">回頂部</button>
+
+  <div id="level5"></div>
+  <h2>等級五：少用/罕用 (Infrequent / Rare)</h2>
+  <table id="level5Table"></table>
+  <button class="back-to-top" onclick="scrollToTop()">回頂部</button>
+
+  <div class="popup" id="popup"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+  <a href="index.html">回首頁</a>
+
+  <script>
+    const levelMap = {
+      level1: "了,好,小,到,道,高,老,少,表,要,包,保,報,跑,票,毛,叫,校,笑,早,造,草,貓,腦,鬧,條,鳥,料,告,考,靠,號,交,教,角,腳,消,曉,孝,效,招,找,照,超,潮,吵,炒,燒,操,掃,腰,藥,耀,倒,島,導,掉,釣,調,桃,逃,討,套,挑,跳,勞,搞,稿,橋,巧".split(","),
+      level2: "帽,苗,描,秒,妙,廟,刀,標,錶,貿,貌,著,朝,爪,沼,召,罩,趙,抄,鈔,遭,糟,灶,皂,槽,嫂,搖,瑤,遙,謠,窯,傲,奧,澳,抱,爆,泡,炮,矛,茅,錨,冒,悼,盜,稻".split(","),
+      level3: "刨,鮑,豹,拋,袍,飄,漂,卯,鉚,茂,刁,雕,淘,瑙,癆,澇,撩,聊,僚,潦,寮,嘹,燎,遼,療,繚,鐐,瞭,廖,撂,羔,誥,拷,烤,犒,蒿,濠,壕,嚎,蠔,郝,昊,浩,皓,耗,鎬,顥,蛟,跤,鮫,椒,焦,蕉,礁,澆,膠,嬌,驕,嚼,佼,狡,姣,皎,筊,絞,鉸,餃,剿,勦,僥,矯,繳,攪".split(","),
+      level4: "孢,苞,胞,煲,褒,雹,堡,葆,褓,飽,寶,彪,飆,鏢,婊,裱,疱,砲,皰,嫖,瓢,瞟,髦,喵,渺,緲,繆,叨,擣,禱,叼,凋,碉,鵰,鯛,貂,弔,搯,啕,迢,窕,眺,撓,窖,轎".split(","),
+      level5: "屌,饕,孬,尻,謏,耖,肏,洨,懋,淼,藐,邈,獠,酵,驁".split(",")
+    };
+
+    const zhuyinMap = {
+      // 例：'好': { 聲母: 'ㄏ', 介音: '', 韻母: 'ㄠ', 聲調: '3' }
+    };
+
+    function getZhuyinData(char) {
+      return zhuyinMap[char] || { 聲母: "-", 介音: "-", 韻母: "-", 聲調: "-" };
+    }
+
+    function showPopup(char) {
+      const data = getZhuyinData(char);
+      const popup = document.getElementById("popup");
+      popup.innerHTML = `【${char}】<br>聲母：${data.聲母}　介音：${data.介音}　韻母：${data.韻母}　聲調：${data.聲調}`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 3000);
+    }
+
+    function playAudio(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    function vibrateDevice() {
+      if (navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToLevel(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function fillTable(tableId, characters) {
+      const table = document.getElementById(tableId);
+      let row;
+      characters.split(",").forEach((char, index) => {
+        if (index % 10 === 0) row = table.insertRow();
+        const cell = row.insertCell();
+        cell.textContent = char.trim();
+        cell.onclick = () => {
+          playAudio(char.trim());
+          showPopup(char.trim());
+          vibrateDevice();
+        };
+      });
+    }
+
+    function updateCharCounter() {
+      const totalChars = Object.values(levelMap).reduce((sum, chars) => sum + chars.length, 0);
+      const charCounter = document.getElementById("charCounter");
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    for (const level in levelMap) {
+      fillTable(`${level}Table`, levelMap[level].join(","));
+    }
+
+    // Initial counter update
+    updateCharCounter();
+  </script>
+</body>
+</html>

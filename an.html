@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄢ韻國字表</title>
+  <style>
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      background-color: #fff9f2;
+      margin: 0;
+      padding: 1em;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-top: 1em;
+    }
+
+    .柿橙 {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.3em;
+      margin-bottom: 1.5em;
+    }
+
+    .柿橙 a {
+      color: #cc5500;
+      text-decoration: none;
+      border-bottom: 2px dashed #ff6600;
+      padding: 0.2em 0.5em;
+      background: linear-gradient(to right, #ffe4c4, #fff1d6);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .柿橙 a:hover {
+      background-color: #ffcc88;
+      color: #8b0000;
+      font-weight: bolder;
+    }
+
+    .level-nav {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+
+    .level-nav button {
+      margin: 0.2em;
+      padding: 0.7em 1.2em;
+      background-color: #ffa94d;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      font-size: 1.1em;
+    }
+
+    .level-nav button:hover {
+      background-color: #ff7f0e;
+    }
+
+    table {
+      width: 90%;
+      margin: 2em auto;
+      border-collapse: collapse;
+      background-color: #fff3e0;
+      border-radius: 10px;
+      font-size: 2em;
+    }
+
+    caption {
+      background-color: #ffa94d;
+      color: white;
+      font-weight: bold;
+      padding: 0.7em;
+      font-size: 1.5em;
+    }
+
+    td {
+      border: 1px solid #f5c49e;
+      padding: 0.6em 1em;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    td:hover {
+      background-color: #ffe0b2;
+    }
+
+    .top-button {
+      display: block;
+      margin: 1em auto 3em;
+      background-color: #f77f00;
+      color: white;
+      border: none;
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .top-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff7f50;
+      color: white;
+      padding: 0.7em 1.2em;
+      border-radius: 50%;
+      font-size: 1.4em;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .top-float:hover {
+      background-color: #ff5722;
+    }
+
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* Moved to bottom-left corner */
+      background-color: #fff3e0;
+      color: #cc5500;
+      padding: 0.6em 1.2em; /* Reduced padding for smaller box */
+      border-radius: 8px;
+      font-size: 1em; /* Reduced font size for smaller text */
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #f5c49e;
+    }
+
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ㄢ韻國字學習表</h1>
+  <div class="柿橙">
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/5088/" target="_blank">
+      柿子是橘色的，橘子是橙色的：柿橙相似
+    </a>
+  </div>
+
+  <div class="level-nav">
+    <button onclick="scrollToLevel('level1')">等級 1</button>
+    <button onclick="scrollToLevel('level2')">等級 2</button>
+    <button onclick="scrollToLevel('level3')">等級 3</button>
+    <button onclick="scrollToLevel('level4')">等級 4</button>
+    <button onclick="scrollToLevel('level5')">等級 5</button>
+  </div>
+
+  <div id="tables"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+  <button class="top-float" onclick="scrollToTop()">↑</button>
+
+  <script>
+    const levels = {
+      level1: "變,便,滿,面,飯,但,點,電,短,斷,天,談,年,南,難,連,臉,亂,干,感,幹,官,管,關,看,還,換,間,見,建,簡,件,前,錢,全,先,現,選,站,戰,轉,傳,穿,山,善,然,參,三,散,算,言,眼,演,完,玩,晚,萬,元,原,員,圓,遠,院,安,案,暗",
+      level2: "板,版,半,辦,邊,盤,判,盼,篇,片,慢,棉,免,麵,翻,凡,煩,反,犯,單,擔,膽,蛋,彈,店,端,壇,探,碳,甜,填,團,念,暖,欄,藍,覽,練,戀,肝,趕,敢,館,慣,罐,刊,寒,漢,款,監,檢,鍵,圈,權,縣,憲,獻,軒,宣,懸",
+      level3: "班,般,搬,頒,拌,絆,扮,瓣,扁,匾,貶,辨,辮,辯,潘,攀,偏,蠻,埋,饅,眠,綿,勉,範,丹,耽,顛,典,緞,鍛,貪,灘,攤,潭,坦,舔,粘,黏,捻,碾,輾,攔,爛,廉,簾,鐮,憐,聯,巒,卵,竿,柑,棺,冠,寬,含,函,涵,汗,旱,悍,捍,尖,煎,揀,剪,減,儉,撿,漸,箭,劍,倦,眷,絹,欠,仙,弦,鹹,閑,閒,陷,餡,羨,腺,沾,斬,暫,禪,蟬,川,杉,閃,膳,繕,拴,栓,淹,醃,炎,岩,延,顏,掩,雁,厭,彎,丸,宛,婉,鞍,庵,岸,按,扳,斑,阪",
+      level4: "蝙,卞,弁,槃,磐,翩,鰻,瞞,蹣,幔,嫚,蔓,娩,冕,緬,靦,蕃,氾,范,汎,梵,泛,販,眈,鄲,殫,簞,石,啖,氮,憚,澹,掂,巔,癲,碘,佃,甸,鈿,玷,惦,踮,奠,殿,澱,墊,靛,坍,癱,覃,罈,譚,醰,痰,忐,袒,毯,炭,糰,鯰,撚,喃,楠,嵐,籃",
+      level5: "湳,腩,婪,斕,襤,漣,璉,槤,褳,鰱,濂,楝,殮,瀲,孿,欒,攣,矸,疳,尷,擀,旰,淦,紺,倌,矜,綸,鰥,摜,盥,戡"
+    };
+
+    const tablesContainer = document.getElementById('tables');
+    const charCounter = document.getElementById('charCounter');
+
+    function updateCharCounter() {
+      const totalChars = Object.values(levels).reduce((sum, chars) => sum + chars.split(',').length, 0);
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    Object.entries(levels).forEach(([level, chars]) => {
+      const table = document.createElement('table');
+      table.id = level;
+
+      const caption = document.createElement('caption');
+      caption.textContent = level.replace("level", "等級 ");
+      table.appendChild(caption);
+
+      const charArray = chars.split(',');
+      for (let i = 0; i < charArray.length; i += 10) {
+        const row = document.createElement('tr');
+        charArray.slice(i, i + 10).forEach(char => {
+          const cell = document.createElement('td');
+          cell.textContent = char;
+          cell.onclick = () => speak(char);
+          row.appendChild(cell);
+        });
+        table.appendChild(row);
+      }
+
+      tablesContainer.appendChild(table);
+
+      const backBtn = document.createElement('button');
+      backBtn.className = 'top-button';
+      backBtn.textContent = '回到頂部';
+      backBtn.onclick = scrollToTop;
+      tablesContainer.appendChild(backBtn);
+    });
+
+    function scrollToLevel(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function speak(text) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    // Initial counter update
+    updateCharCounter();
+  </script>
+
+</body>
+</html>

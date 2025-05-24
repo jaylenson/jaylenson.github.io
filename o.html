@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ㄛ韻國字表</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: "Noto Serif TC", serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #e0e0e0;
+    }
+
+    .quote-link {
+  display: inline-block;
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff8a65;
+  text-decoration: none;
+  background-color: #1e1e1e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ffab91;
+  animation: blink-move 2s infinite;
+}
+
+@keyframes blink-move {
+  0% {
+    color: #ff8a65;
+    transform: translateX(0px);
+  }
+  25% {
+    color: #ffc1a6;
+    transform: translateX(3px);
+  }
+  50% {
+    color: #ff7043;
+    transform: translateX(-3px);
+  }
+  75% {
+    color: #ffc1a6;
+    transform: translateX(2px);
+  }
+  100% {
+    color: #ff8a65;
+    transform: translateX(0px);
+  }
+}
+
+    .quote-link:hover {
+      background-color: #ffab91;
+      color: #1e1e1e;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 85%;
+      background-color: #1e1e1e;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    td {
+      border: 1px solid #333;
+      padding: 14px;
+      font-size: 22px;
+      width: 10%;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    td:hover {
+      background-color: #333;
+    }
+
+    a.back-home {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #00bcd4;
+    }
+
+    a.back-home:hover {
+      text-decoration: underline;
+    }
+    #char-count {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  background-color: #1e1e1e;
+  color: #ffccbc;
+  border: 1px solid #ffab91;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 0 5px rgba(255, 138, 101, 0.5);
+  z-index: 999;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>ㄛ 韻 國字集</h1>
+  <a href="https://sutian.moe.edu.tw/zh-hant/su/6227/" class="quote-link">我早就閉上了雙眼，我的目的只在於黑暗之中。</a>
+
+  <table>
+    <tbody>
+      <!-- JS will insert content here -->
+    </tbody>
+  </table>
+
+  <a href="index.html" class="back-home">回首頁</a>
+  <div id="char-count">總字數：0</div>
+  <script>
+    const characters = "我國說作做多過果左坐活火落所破波模末莫佛博羅貨或惑獲夥伙朵郭括擴闊握措錯縮索鎖昨奪數妥諾弱默漠脫薄著琢濁窩沃臥喔若拖播摩剝搏桌裸娜蘿捉霍躲駝碩哆喏寞脈陌脖駁啄濯戳輟綽搓磋挫撮唆梭嗦蓑簑唷渦萵渥幗齷斡齪妁槊爍鑠蒻唑蹉痤厝娑挲".split('');
+    const perRow = 10;
+    const tbody = document.querySelector("table tbody");
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    for (let i = 0; i < characters.length; i += perRow) {
+      const row = document.createElement("tr");
+      for (let j = 0; j < perRow; j++) {
+        const char = characters[i + j];
+        const cell = document.createElement("td");
+        if (char) {
+          cell.textContent = char;
+          cell.addEventListener("click", () => speak(char));
+        }
+        row.appendChild(cell);
+      }
+      tbody.appendChild(row);
+    }
+    // 統計字數並更新右下角顯示
+const countBox = document.getElementById("char-count");
+countBox.textContent = `總字數：${characters.length}`;
+  </script>
+
+
+</body>
+</html>

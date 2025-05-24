@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ㄡ韻國字表</title>
+    <style>
+        body {
+            background-color: #F9F0FC; /* 更淡的紫色背景 */
+            color: #4A148C;
+            font-family: 'Noto Sans TC', sans-serif;
+            text-align: center;
+            padding: 2em;
+        }
+        h1 {
+            color: #6A1B9A;
+            margin-bottom: 0.5em;
+            font-size: 2.8em;
+        }
+        .nav-buttons {
+            margin-bottom: 2em;
+        }
+        .nav-buttons button {
+            background-color: #CE93D8;
+            color: #4A148C;
+            border: none;
+            padding: 0.6em 1.2em;
+            margin: 0.3em;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .nav-buttons button:hover {
+            background-color: #BA68C8;
+        }
+        table {
+            margin: 2em auto;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 0 15px rgba(74, 20, 140, 0.3);
+            background-color: #F8EAF6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        td {
+            border: 1px solid #BA68C8;
+            padding: 1em;
+            font-size: 1.6em;
+            width: 80px;
+            height: 80px;
+            background-color: #E8D4EF; /* 表格底色略深 */
+            color: #4A148C;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            user-select: text;
+        }
+        td:hover {
+            background-color: #D1A5E6;
+            transform: scale(1.05);
+        }
+        h2 {
+            color: #6A1B9A;
+            font-size: 2em;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        .back-to-top {
+            margin: 1em;
+        }
+        .back-to-top button {
+            background-color: #D1C4E9;
+            color: #4A148C;
+            border: none;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #F3E5F5;
+            padding: 1em 2em;
+            border: 2px solid #AB47BC;
+            border-radius: 10px;
+            font-size: 1.4em;
+            display: none;
+            z-index: 999;
+            color: #4A148C;
+        }
+        .kir-style-link {
+            margin-top: 0.5em;
+            margin-bottom: 1.5em;
+            font-size: 1.4em;
+            color: #7B4BA6; /* 柔和紫色 */
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            font-family: 'Noto Serif TC', serif;
+        }
+        .kir-style-link .highlight-char {
+            color: #9C6FD1;  /* 更亮一點的紫色凸顯茄字 */
+            font-weight: 700;
+        }
+        .kir-style-link a {
+            margin-left: 0.6em;
+            font-size: 1em;
+            color: #6A1B9A;
+            text-decoration: underline dotted;
+            transition: color 0.3s;
+        }
+        .kir-style-link a:hover {
+            color: #9C6FD1;
+        }
+        /* Counter styling */
+        .char-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #F3E5F5;
+            color: #4A148C;
+            padding: 0.8em 1.5em;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-family: 'Noto Sans TC', sans-serif;
+            box-shadow: 0 4px 8px rgba(74, 20, 140, 0.3);
+            z-index: 998;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+            border: 1px solid #AB47BC;
+        }
+        .char-counter:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>ㄡ韻國字表</h1>
+    <p class="kir-style-link">
+        <a href="https://sutian.moe.edu.tw/zh-hant/su/5462/" target="_blank" rel="noopener noreferrer">孔融讓梨<span class="highlight-char">茄</span>子蛋讓......榴槤</a>
+    </p>
+
+    <div class="nav-buttons">
+        <button onclick="document.getElementById('level1').scrollIntoView({ behavior: 'smooth' })">等級一</button>
+        <button onclick="document.getElementById('level2').scrollIntoView({ behavior: 'smooth' })">等級二</button>
+        <button onclick="document.getElementById('level3').scrollIntoView({ behavior: 'smooth' })">等級三</button>
+        <button onclick="document.getElementById('level4').scrollIntoView({ behavior: 'smooth' })">等級四</button>
+        <button onclick="document.getElementById('level5').scrollIntoView({ behavior: 'smooth' })">等級五</button>
+    </div>
+
+    <div id="popup" class="popup"></div>
+    <div class="char-counter" id="charCounter">總字數：0</div>
+
+    <!-- 等級一 -->
+    <h2 id="level1">等級一：極常用</h2>
+    <table id="table1"></table>
+    <div class="back-to-top"><button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回頂部</button></div>
+
+    <!-- 等級二 -->
+    <h2 id="level2">等級二：很常用</h2>
+    <table id="table2"></table>
+    <div class="back-to-top"><button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回頂部</button></div>
+
+    <!-- 等級三 -->
+    <h2 id="level3">等級三：常用</h2>
+    <table id="table3"></table>
+    <div class="back-to-top"><button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回頂部</button></div>
+
+    <!-- 等級四 -->
+    <h2 id="level4">等級四：次常用</h2>
+    <table id="table4"></table>
+    <div class="back-to-top"><button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回頂部</button></div>
+
+    <!-- 等級五 -->
+    <h2 id="level5">等級五：少用／罕用</h2>
+    <table id="table5"></table>
+    <div class="back-to-top"><button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回頂部</button></div>
+
+    <a href="index.html">回首頁</a>
+
+    <script>
+        const popup = document.getElementById("popup");
+        const charCounter = document.getElementById("charCounter");
+
+        function showPopup(char) {
+            popup.textContent = `【${char}】`;
+            popup.style.display = 'block';
+            setTimeout(() => popup.style.display = 'none', 3000);
+        }
+
+        function playAudio(char) {
+            const utterance = new SpeechSynthesisUtterance(char);
+            utterance.lang = 'zh-TW';
+            speechSynthesis.speak(utterance);
+        }
+
+        function fillTable(id, chars) {
+            const table = document.getElementById(id);
+            let row;
+            chars.forEach((char, i) => {
+                if (i % 10 === 0) row = table.insertRow();
+                const cell = row.insertCell();
+                cell.textContent = char;
+                cell.onclick = () => {
+                    playAudio(char);
+                    showPopup(char);
+                };
+            });
+        }
+
+        function updateCharCounter() {
+            const totalChars = level1.length + level2.length + level3.length + level4.length + level5.length;
+            charCounter.textContent = `總字數：${totalChars}`;
+        }
+
+        const level1 = "有 就 後 頭 都 手 口 九 久 六 走 又 右 油 由 樓 流 留 夠 酒 秋 球 求 修 收 熟 守 首 受 售 壽 瘦 肉 某 否 露 句 狗 構 購 扣 厚 候 舊 究 救 休 秀 袖 周 週 抽 醜 臭 優 游 遊 郵 猶 友 幼 誘 歐 謀".split(" ");
+        const level2 = "投 透 牛 扭 紐 鈕 漏 陸 鉤 溝 叩 侯 繡 州 洲 舟 粥 軸 肘 宙 咒 晝 皺 授 獸 奏 搜 悠 幽 憂 偶 剖 謬 繆 兜 斗 抖 豆 逗 鬥 丟 偷 簍 陋 溜 柳 喉 猴 吼 后 逅 糾 臼 舅 羞 鏽 柔".split(" ");
+        const level3 = "痘 妞 拗 摟 勾 枸 苟 垢 詬 搆 摳 釦 寇 揪 鳩 玖 韭 疚 咎 丘 邱 囚 裘 嗅 紂 仇 稠 綢 酬 愁 丑 揉 鄒 揍 嗽 尤 藕 嘔".split(" ");
+        const level4 = "蚪 陡 荳 竇 婁 僂 嘍 螻 琉 硫 榴 瘤 劉 瀏 遛 啾 鷲 坵 蚯 酋 咻 脩 琇 溴 妯 帚 縐 惆 瞅 綬 狩 蹂 謅 驟 輳 餿 颼 蒐 攸 呦 疣 魷 酉 佑 祐 侑 宥 柚 釉 鈾 毆 謳 鷗 耦 漚".split(" ");
+        const level5 = "髏 蹓 餾 鞦 鰍 逑 毬 糗 饈 籀 儔 疇 躊 叟 蝣 猷 莠".split(" ");
+
+        fillTable("table1", level1);
+        fillTable("table2", level2);
+        fillTable("table3", level3);
+        fillTable("table4", level4);
+        fillTable("table5", level5);
+
+        // Initial counter update
+        updateCharCounter();
+    </script>
+</body>
+</html>

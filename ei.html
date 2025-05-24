@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄟ韻國字表</title>
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #333333;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+      position: relative; /* Added in case any child needs absolute positioning relative to body later */
+    }
+
+    /* 黑底橫幅（後翼棄兵風格） */
+    .quote-banner {
+      background-color: #111111;
+      color: #FFD700;
+      font-family: 'Georgia', serif;
+      padding: 1em 2em;
+      margin-bottom: 2em;
+      font-size: 1.2em;
+      line-height: 1.6;
+      border-radius: 10px;
+      position: relative;
+      animation: fadeIn 2s ease-in-out;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .quote-banner::before, .quote-banner::after {
+      content: "♞";
+      font-size: 1.5em;
+      color: #666666;
+      margin: 0 0.5em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title-wrapper {
+      position: relative;  /* 為音量控制的絕對定位提供上下文 */
+      text-align: center;  /* 使內部 h1 標題居中 */
+      margin-bottom: 1em;  /* 標題區塊下方的間距 */
+      padding: 0.5em 0;    /* 上下內邊距，確保音量控制有足夠垂直空間 */
+    }
+
+    .title-wrapper h1 {
+      color: #222222;
+      font-size: 2.8em;
+      margin: 0;             /* 移除 h1 預設的 margin */
+      display: inline-block; /* 讓 text-align:center 能正確作用於標題寬度 */
+      vertical-align: middle;/* 確保與可能的內聯元素垂直對齊 */
+    }
+
+    .volume-control-container {
+      position: absolute;    /* 相對於 .title-wrapper 定位 */
+      right: 0;              /* 定位到 .title-wrapper 的最右側 */
+      top: 50%;              /* 垂直居中定位 */
+      transform: translateY(-50%); /* 精確垂直居中 */
+      display: flex;
+      align-items: center;
+    }
+
+    .volume-control-container label {
+      font-size: 0.9em;
+      color: #ccc;          /* 使用您原本為音量標籤設定的顏色 */
+      margin-right: 0.3em;
+    }
+
+    .volume-control-container input[type="range"] {
+      width: 100px;
+      height: 8px;
+      vertical-align: middle;
+    }
+
+    .nav-buttons {
+      margin: 2em auto;
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
+
+    .nav-buttons button,
+    .back-to-top {
+      font-size: 1em;
+      padding: 0.6em 1.2em;
+      border: none;
+      border-radius: 6px;
+      background-color: #444;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .nav-buttons button:hover,
+    .back-to-top:hover {
+      background-color: #000;
+      transform: scale(1.05);
+    }
+
+    .level-section {
+      margin-bottom: 3em;
+    }
+
+    .level-title {
+      font-size: 1.8em;
+      margin-bottom: 0.5em;
+      color: #444444;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1100px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: #FFFFFF;
+    }
+
+    td {
+      border: 1px solid #CCCCCC;
+      padding: 1em;
+      font-size: 1.8em;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s, transform 0.2s, color 0.2s;
+      color: #000000;
+    }
+
+    tr:nth-child(even) td:nth-child(odd),
+    tr:nth-child(odd) td:nth-child(even) {
+      background-color: #FFFFFF;
+    }
+
+    tr:nth-child(even) td:nth-child(even),
+    tr:nth-child(odd) td:nth-child(odd) {
+      background-color: #111111;
+      color: #FFFFFF;
+    }
+
+    td:hover {
+      background-color: #DDDDDD;
+      transform: scale(1.05);
+      color: #000000;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 150, 255, 0.5);
+      transform: scale(0);
+      animation: ripple-effect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-effect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333333;
+      padding: 1em 2em;
+      border: 2px solid #555555;
+      border-radius: 10px;
+      font-size: 1.4em;
+      display: none;
+      z-index: 999;
+      color: #FFFFFF;
+    }
+
+    audio {
+      display: none; /* 隱藏原生控制列 */
+    }
+
+    button { /* General button styles, if any are left or for future use */
+      background-color: #444;
+      color: #ffd54f;
+      border: none;
+      padding: 0.5em 1em;
+      margin: 0.3em;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333333;
+      color: #FFFFFF;
+      padding: 0.8em 1.5em;
+      border-radius: 8px;
+      font-size: 1.2em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="quote-banner">
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/6246/" target="_blank" style="color:inherit; text-decoration: none;">
+      世界如棋盤，萬象乃棋子，遊戲規則即大自然法則，競爭對手藏於另一側，不讓我們看見。
+    </a>
+  </div>
+
+  <div class="title-wrapper">
+    <h1>ㄟ韻國字表</h1>
+    <div class="volume-control-container">
+      <label for="volumeSlider">音量：</label> <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" oninput="setVolume(this.value)" />
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button onclick="document.getElementById('level1').scrollIntoView({behavior: 'smooth'})">等級一</button>
+    <button onclick="document.getElementById('level2').scrollIntoView({behavior: 'smooth'})">等級二</button>
+    <button onclick="document.getElementById('level3').scrollIntoView({behavior: 'smooth'})">等級三</button>
+    <button onclick="document.getElementById('level4').scrollIntoView({behavior: 'smooth'})">等級四</button>
+    <button onclick="document.getElementById('level5').scrollIntoView({behavior: 'smooth'})">等級五</button>
+  </div>
+
+  <div id="charContainer"></div>
+  <div class="popup" id="popup"></div>
+  
+  <audio id="bgm" src="You're Gloating.mp3" autoplay loop></audio>
+
+  <div class="char-counter" id="charCounter">總字數：0</div>
+
+  <a href="index.html" style="display:block; margin-top: 2em;">回首頁</a>
+
+  <script>
+    const levels = [
+      {
+        id: "level1",
+        title: "等級一：極常用 (Extremely Common)",
+        chars: "會,為,沒,水,說,內,給,回,每,美,費,對,最,累,類,誰,歲,貴,飛,非,黑,被,配,備,背,北,妹,推,退,規,歸,鬼,位,未,味,胃,衛".split(",")
+      },
+      {
+        id: "level2",
+        title: "等級二：很常用 (Very Common)",
+        chars: "廢,隊,腿,雷,淚,灰,揮,輝,慧,惠,繪,彙,追,吹,垂,睡,嘴,罪,隨,碎,威,圍,違,維,微,尾,委,偉,緯,謂,慰,遺,魏".split(",")
+      },
+      {
+        id: "level3",
+        title: "等級三：常用 (Common)",
+        chars: "倍,陪,賠,佩,枚,眉,梅,媒,煤,魅,媚,妃,沸,肺,壘,瑰,龜,軌,桂,櫃,跪,虧,葵,魁,愧,潰,饋,嘿,悔,匯,賄,燴,薈,錐,墜,贅,炊,捶,錘,稅,瑞,銳,賊,醉,崔,催,摧,脆,粹,翠,雖,穗,桅,惟,唯,帷,偽,畏,喂,餵".split(",")
+      },
+      {
+        id: "level4",
+        title: "等級四：次常用 (Less Common)",
+        chars: "杯,碑,悲,貝,培,沛,珮,玫,鎂,昧,寐,袂,啡,菲,扉,蜚,緋,霏,肥,匪,斐,翡,誹,吠,痱,堆,兌,頹,蛻,餒,勒,擂,鐳,磊,蕾,儡,圭,閨,鮭,晷,詭,盔,窺,奎,馗,逵,揆,睽,傀,喟,餽,匱,蕢,簣,恢,詼,暉,麾,徽,洄,迴,蛔,毀,虫,卉,彗,晦,誨,蕙,喙,諱,穢,隹,椎,騅,惴,綴,縋,陲,棰,搥,槌,鎚,蕊,芮,睿,叡,璀,淬,悴,啐,萃,瘁,綏,隋,髓,遂,隧,燧,邃".split(",")
+      },
+      {
+        id: "level5",
+        title: "等級五：少用/罕用 (Infrequent / Rare)",
+        chars: "萎,逶,崴,葳,偎,隈,危,韋,薇,巍,娓,艉,痿,諉,煒,瑋,葦,猥,鮪,渭,蝟,尉,蔚,欸,盃,卑,揹,悖,焙,胚,呸,裴,霈,湄,嵋,楣,莓,酶,霉,黴,埤,狽,蓓,憊,輩,礨,羸,罍,纍".split(",")
+      }
+    ];
+
+    const container = document.getElementById("charContainer");
+    const popup = document.getElementById("popup");
+    const charCounter = document.getElementById("charCounter");
+    const bgm = document.getElementById("bgm");
+
+
+    function updateCharCounter() {
+      const totalChars = levels.reduce((sum, level) => {
+        const validCharsInLevel = level.chars.filter(char => char.trim() !== "");
+        return sum + validCharsInLevel.length;
+      }, 0);
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    function showPopup(char) {
+      popup.innerHTML = `【${char}】`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 3000);
+    }
+
+    function playAudio(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+    }
+
+    function createRipple(event, element) {
+      const circle = document.createElement("div");
+      circle.classList.add("ripple");
+      element.appendChild(circle);
+
+      const d = Math.max(element.clientWidth, element.clientHeight);
+      circle.style.width = circle.style.height = d + 'px';
+      circle.style.left = event.offsetX - d/2 + 'px';
+      circle.style.top = event.offsetY - d/2 + 'px';
+
+      circle.addEventListener('animationend', () => {
+        circle.remove();
+      });
+    }
+
+    levels.forEach(level => {
+      const section = document.createElement("div");
+      section.className = "level-section";
+      section.id = level.id;
+
+      const title = document.createElement("div");
+      title.className = "level-title";
+      title.textContent = level.title;
+      section.appendChild(title);
+
+      const table = document.createElement("table");
+      let row;
+      level.chars.forEach((char, index) => {
+        const trimmedChar = char.trim();
+        if (trimmedChar === "") return; 
+
+        if (index % 10 === 0) { 
+          row = table.insertRow();
+        }
+        const cell = row.insertCell();
+        cell.textContent = trimmedChar;
+        cell.onclick = (e) => {
+          playAudio(trimmedChar);
+          showPopup(trimmedChar);
+          createRipple(e, cell);
+        };
+      });
+
+      const backTop = document.createElement("button");
+      backTop.textContent = "回到頂部";
+      backTop.className = "back-to-top";
+      backTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      section.appendChild(table);
+      section.appendChild(backTop); 
+      container.appendChild(section);
+    });
+
+    updateCharCounter();
+
+    function setVolume(value) {
+      bgm.volume = parseFloat(value);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const initialVolume = document.getElementById('volumeSlider').value;
+        setVolume(initialVolume);
+        // Ensure BGM is playing, some browsers are strict about autoplay
+        bgm.play().catch(error => console.log("Autoplay prevented: ", error));
+    });
+
+  </script>
+</body>
+</html>

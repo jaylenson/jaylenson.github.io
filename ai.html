@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ㄞ韻國字表</title>
+  <style>
+    body {
+      background-color: #f4e8d4;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #5c3a1e;
+      margin-bottom: 20px;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 960px;
+    }
+
+    td {
+      border: 1px solid #c8b090;
+      padding: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      background-color: #fff8ee;
+      color: #5a3820;
+      width: 60px;
+      height: 60px;
+      position: relative;
+    }
+
+    td:hover {
+      background-color: #e7d3b7;
+    }
+
+    .popup {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #fff8ee;
+      border: 2px solid #c8b090;
+      padding: 1em 2em;
+      border-radius: 10px;
+      font-size: 1.2em;
+      z-index: 999;
+      display: none;
+      color: #5a3820;
+    }
+
+    .play-icon {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      font-size: 16px;
+      color: #7b4b2a;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #7b4b2a;
+      font-size: 18px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+    .ancient-link {
+  position: absolute;
+  top: 12px;
+  right: 30px;
+  font-family: "Times New Roman", serif;
+  font-size: 15px;
+  color: #4e3c2b;
+  background-color: rgba(244, 231, 200, 0.8);
+  padding: 5px 10px;
+  border: 1px dashed #9a8566;
+  border-radius: 5px;
+  text-decoration: none;
+  opacity: 0.9;
+  filter: grayscale(30%) contrast(90%);
+  font-style: italic;
+  box-shadow: 1px 1px 3px rgba(60, 50, 30, 0.3);
+  z-index: 5;
+  transition: all 0.3s ease;
+
+  background-image: url('https://i.imgur.com/rs0Evk3.png'); /* 裂紋背景 */
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 60px 60px;
+}
+
+.ancient-link:hover {
+  color: #3a2e20;
+  background-color: rgba(232, 218, 180, 0.9);
+  text-decoration: underline wavy #9a8566;
+  transform: rotate(-0.5deg) scale(1.03);
+}
+.counter {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background-color: #fff8ee;
+  border: 1px solid #c8b090;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #5a3820;
+  box-shadow: 1px 1px 5px rgba(60, 50, 30, 0.2);
+  z-index: 999;
+  opacity: 0.9;
+}
+
+</style>
+</head>
+<body>
+  <h1>ㄞ韻國字表</h1>
+  <a class="ancient-link" href="https://sutian.moe.edu.tw/zh-hant/su/1249/" target="_blank">
+    LBI（老ㄅㄞ）
+  </a> 
+  
+  <table>
+    <tbody id="charTable"></tbody>
+  </table>
+
+  <div class="popup" id="popup"></div>
+
+  <a href="index.html">回首頁</a>
+  <div class="counter" id="counter">字數統計：0</div>
+
+
+  <script>
+    const characters = "在再才來會還海愛外帶代開快塊買賣太該壞菜白百待奶賴改蓋怪孩害懷宅差材財採彩態拍排牌派呆袋貸戴抬颱臺泰耐奈概帥率災載仔猜裁踩蔡塞歪哀挨矮艾礙擺拜敗麥埋脈邁歹逮怠胎苔檯汰慨凱楷筷摘窄柴債寨拽摔衰甩栽宰采腮崖癌佰襬徘湃霾岱黛殆迨邰跆肽氖迺徠萊睞瀨癩籟賅丐鈣溉乖拐枴揩愷鎧鍇愾劊檜嗨骸亥氦駭徊淮槐踝齋釵豺儕搋揣踹篩骰曬蟀哉崽綵鰓哎埃唉捱藹靄嬡璦曖隘掰";
+
+    const table = document.getElementById('charTable');
+    const popup = document.getElementById('popup');
+
+    // 模擬注音資料查詢函式（可連接資料庫或字典 API）
+    function getZhuyin(char) {
+      return {
+        聲母: "ㄎ",
+        介音: "",
+        韻母: "ㄞ",
+        聲調: "2" // 假設用資料庫提供的數據替換
+      };
+    }
+
+    function showPopup(char) {
+      const zhuyin = getZhuyin(char);
+      popup.innerHTML = `【${char}】<br>聲母：${zhuyin.聲母}　介音：${zhuyin.介音}　韻母：${zhuyin.韻母}　聲調：${zhuyin.聲調}`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 3000);
+    }
+
+    function speak(text) {
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = 'zh-TW';
+      window.speechSynthesis.speak(msg);
+    }
+
+    let row;
+    characters.split("").forEach((char, index) => {
+      if (index % 10 === 0) {
+        row = document.createElement('tr');
+        table.appendChild(row);
+      }
+      const cell = document.createElement('td');
+      cell.textContent = char;
+
+      const icon = document.createElement('span');
+      icon.className = 'play-icon';
+      icon.innerHTML = '🔊';
+      cell.appendChild(icon);
+
+      cell.onclick = () => {
+        speak(char);
+        showPopup(char);
+      };
+
+      row.appendChild(cell);
+    });
+    // 更新字數統計
+function updateCounter() {
+  const count = characters.length;
+  document.getElementById('counter').textContent = `字數統計：${count}`;
+}
+
+updateCounter(); // 初始化時更新
+
+  </script>
+</body>
+</html>
+

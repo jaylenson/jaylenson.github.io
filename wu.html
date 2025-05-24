@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ㄨ韻國字表</title>
+  <style> 
+    body { 
+      background-color: #F5F5F5; 
+      color: #424242; 
+      font-family: 'Noto Sans TC', sans-serif; 
+      text-align: center; 
+      padding: 2em; 
+    } 
+    h1 { 
+      color: #616161; 
+      margin-bottom: 1em; 
+      font-size: 2.8em; 
+    } 
+    table { 
+      margin: auto; 
+      border-collapse: collapse; 
+      width: 95%; 
+      max-width: 1100px; 
+      box-shadow: 0 0 15px rgba(66, 66, 66, 0.2); 
+      background-color: #EEEEEE; 
+      border-radius: 10px; 
+      overflow: hidden; 
+    } 
+    td { 
+      border: 1px solid #E0E0E0; 
+      background-color: #F5F5F5; 
+      color: #424242; 
+      padding: 1em; 
+      font-size: 1.6em; 
+      width: 80px; 
+      height: 80px; 
+      cursor: pointer; 
+      transition: background-color 0.3s, transform 0.2s; 
+      user-select: text; 
+    } 
+    td:hover { 
+      background-color: #E0E0E0; 
+      transform: scale(1.1); 
+    } 
+    .popup { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      background-color: #757575; 
+      padding: 1em 2em; 
+      border: 2px solid #E0E0E0; 
+      border-radius: 10px; 
+      font-size: 1.4em; 
+      display: none; 
+      z-index: 999; 
+      color: #fff; 
+    } 
+    a { 
+      display: inline-block; 
+      margin-top: 2em; 
+      text-decoration: none; 
+      color: #424242; 
+      font-size: 1.2em; 
+    } 
+    a:hover { 
+      color: #616161; 
+    } 
+    /* Counter styling */
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* Positioned in bottom-left corner */
+      background-color: #EEEEEE;
+      color: #424242;
+      padding: 0.6em 1.2em;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(66, 66, 66, 0.2);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #E0E0E0;
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+  </style>  
+</head>
+<body>
+  <h1>ㄨ韻國字表</h1>
+  <table id="charTable"></table>
+  <div class="popup" id="popup"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+ 
+  <a href="https://sutian.moe.edu.tw/zh-hant/su/8530/">因為髮網灰灰，梳而不露，這樣才超灰搭，又灰長褲。</a>
+  <div class="bottom-center">
+    <a href="index.html" class="home-button">回首頁</a>
+  </div>
+  <script>
+    const characters = `
+父 母 木 目 夫 服 部 步 布 不
+書 數 樹 如 入 足 俗 訴 速 宿
+素 告 固 故 苦 護 戶 虎 湖 胡
+乎 呼 主 住 注 柱 助 初 除 處
+楚 出 毒 讀 杜 度 土 兔 路 錄
+陸 鹿 魯 怒 努 婦 富 副 附 付
+福 府 佛 符 幅 父 股 骨 鼓 谷
+古 姑 估 雇 顧 互 忽 狐 朱 珠
+株 豬 竹 著 暑 署 叔 述 術 恕
+乳 族 組 阻 卒 粗 促 粟 肅 污
+烏 屋 吳 無 五 午 武 勿 物 務
+惡 誤 補 卜 捕 怖 簿 鋪 撲 朴
+僕 普 暴 牧 墓 幕 慕 募 沐 睦
+穆 敷 膚 扶 芙 伏 浮 斧 腐 撫
+赴 負 腹 複 覆 督 獨 堵 賭 肚
+妒 突 途 塗 屠 奴 盧 爐 祿 賂
+露 戮 孤 辜 枯 哭 庫 褲 酷 弧
+蝴 鬍 壺 扈 誅 諸 築 燭 煮 貯
+囑 礎 儲 疏 蔬 淑 贖 薯 鼠 束
+漱 辱 租 祖 蘇 俗 溯 塑 巫 誣
+哺 佈 匍 脯 葡 蒲 菩 譜 曝 姆
+牡 畝 孵 氟 袱 俘 苻 匐 蝠 輻
+縛 釜 甫 輔 俯 腑 咐 駙 阜 訃
+傅 馥 賦 嘟 瀆 犢 牘 睹 篤 渡
+鍍 凸 禿 涂 荼 孥 駑 弩 嚕 瀘
+廬 蘆 顱 鱸 鹵 滷 虜 擄 碌 璐
+鷺 沽 咕 蛄 菇 鴣 箍 瞽 穀 蠱
+痼 錮 骷 堀 窟 惚 葫 糊 鶘 斛
+唬 琥 滸 侏 洙 茱 硃 蛛 銖 竺
+逐 舳 躅 拄 渚 炷 蛀 註 駐 佇
+祝 粥 鑄 齣 芻 雛 蜍 廚 櫥 躕
+鋤 躇 杵 褚 怵 畜 搐 絀 黜 觸
+矗 抒 紓 舒 姝 殊 梳 荼 樞 輸
+孰 塾 糬 黍 蜀 戍 庶 曙 墅 豎
+茹 儒 濡 嚅 孺 蠕 汝 溽 褥 縟
+俎 詛 駔 殂 猝 酢 醋 簇 蹴 甦
+酥 穌 夙 愫 蓿 簌 愬 窣 汙 嗚
+鄔 鎢 塢 毋 吾 梧 鋙 鼯 蜈 蕪
+伍 捂 忤 鵡 侮 摀 舞 嫵 戊 悟
+晤 霧 騖 鶩
+`.trim().split(/\s+/);
+
+    const table = document.getElementById('charTable');
+    const charCounter = document.getElementById('charCounter');
+
+    function populateTable() {
+      let tableContent = '';
+      for (let i = 0; i < characters.length; i++) {
+        if (i % 10 === 0) tableContent += '<tr>';
+        tableContent += `<td onclick="speak('${characters[i]}')">${characters[i]}</td>`;
+        if ((i + 1) % 10 === 0) tableContent += '</tr>';
+      }
+      // 若最後不足 10 字，補上 </tr>
+      if (characters.length % 10 !== 0) tableContent += '</tr>';
+      table.innerHTML = tableContent;
+    }
+
+    function updateCharCounter() {
+      const totalChars = characters.length;
+      charCounter.textContent = `總字數：${totalChars}`;
+    }
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+
+      const popup = document.getElementById('popup');
+      popup.innerText = `正在發音：「${char}」`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 1000);
+    }
+
+    populateTable();
+    updateCharCounter();
+  </script>
+</body>
+</html>

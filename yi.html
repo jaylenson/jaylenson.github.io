@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一韻國字表</title>
+  <style>
+    body {
+      background-color: #FAF3E0;
+      color: #5D4037;
+      font-family: 'Noto Sans TC', sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    h1 {
+      color: #8D6E63;
+      margin-bottom: 1em;
+      font-size: 2.8em;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 1100px;
+      box-shadow: 0 0 15px rgba(93, 64, 55, 0.3);
+      background-color: #FFF8E1;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    td {
+      border: 1px solid #FFE0B2;
+      background-color: #FAF3E0;
+      color: #5D4037;
+      padding: 1em;
+      font-size: 1.6em;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: none;
+    }
+    td:hover {
+      background-color: #FFE0B2;
+      transform: scale(1.1);
+    }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #A1887F;
+      padding: 1em 2em;
+      border: 2px solid #FFF3E0;
+      border-radius: 10px;
+      font-size: 1.4em;
+      display: none;
+      z-index: 999;
+      color: #fff;
+    }
+    .char-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #FFF8E1;
+      color: #5D4037;
+      padding: 0.6em 1.2em;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Noto Sans TC', sans-serif;
+      box-shadow: 0 4px 8px rgba(93, 64, 55, 0.3);
+      z-index: 998;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+      border: 1px solid #FFE0B2;
+    }
+    .char-counter:hover {
+      opacity: 1;
+    }
+    .lyrics {
+      margin-top: 3em;
+      font-size: 1.2em;
+      color: #6D4C41;
+      white-space: pre-wrap;
+      line-height: 2;
+    }
+    .lyrics span {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .lyrics span:hover {
+      color: #8D6E63;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #e63946;
+      background-color: #f1c0c0;
+      padding: 0 0.3em;
+      border-radius: 5px;
+    }
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #FFF8E1;
+      border: 1px solid #FFE0B2;
+      border-radius: 8px;
+      padding: 0.5em 0.7em; /* Reduced padding for smaller size */
+      box-shadow: 0 2px 6px rgba(93, 64, 55, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      z-index: 1000;
+      transition: opacity 0.5s ease, transform 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .music-player.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .music-player button {
+      background: none;
+      border: none;
+      font-size: 1.1em; /* Slightly smaller button */
+      cursor: pointer;
+      padding: 0;
+    }
+    .progress-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3em; /* Reduced gap */
+      width: 110px; /* Fixed width for alignment */
+    }
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 0.3em; /* Reduced gap */
+      width: 110px; /* Fixed width for alignment */
+    }
+    .music-player input[type=range] {
+      accent-color: #8D6E63;
+      height: 3px; /* Thinner slider */
+      width: 100%; /* Full width within container */
+      margin: 0; /* Remove default margin */
+    }
+    .timestamp {
+      font-size: 0.8em; /* Smaller timestamp */
+      color: #5D4037;
+    }
+    #volumeLevel {
+      font-size: 0.8em; /* Smaller volume text */
+      color: #5D4037;
+      min-width: 35px; /* Slightly smaller width */
+      text-align: left;
+    }
+    .button-container a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #b1926b;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+    .button-container a:hover {
+      background-color: #8D6E63;
+    }
+  </style>
+</head>
+<body>
+  <h1>一韻國字表</h1>
+  <table id="charTable"></table>
+  <div class="popup" id="popup"></div>
+  <div class="char-counter" id="charCounter">總字數：0</div>
+
+  <!-- 背景音樂播放器 -->
+  <div class="music-player">
+    <button onclick="togglePlay()" id="playPauseBtn">▶️</button>
+    <div class="progress-container">
+      <input type="range" id="seekBar" value="0" step="0.1" min="0" max="100">
+      <div class="timestamp" id="timestamp">0:00 / 0:00</div>
+    </div>
+    <div class="volume-container">
+      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.5" title="音量">
+      <span id="volumeLevel">50%</span>
+    </div>
+  </div>
+  <audio id="bgMusic" src="pain.mp3"></audio>
+
+  <!-- 歌詞顯示區 -->
+  <div class="lyrics" id="lyrics">
+    <span id="lyric1" onclick="seekTo(0.1)">一袋米要扛幾樓 (你們要去感受痛楚)</span><br/>
+    <span id="lyric2" onclick="seekTo(2)">一袋米要扛二樓 (思考痛楚)</span><br/>
+    <span id="lyric3" onclick="seekTo(4)">一袋米我給多嘞 (接受痛楚)</span><br/>
+    <span id="lyric4" onclick="seekTo(6)">一袋米我洗嘞 (瞭解痛楚)</span><br/>
+    <span id="lyric5" onclick="seekTo(8)">一袋米我洗了那麼多泥 (不了解痛楚的人)</span><br/>
+    <span id="lyric6" onclick="seekTo(11)">紅豆弄黑挖嘎啦 (不可能會了解真正的和平)</span><br/>
+    <span id="lyric7" onclick="seekTo(13)">顆顆有椅 (就是現在)</span><br/>
+    <span id="lyric8" onclick="seekTo(15)">誰可以你一袋米喲 (讓這個世界感受痛楚吧)</span><br/>
+    <span id="lyric9" onclick="seekTo(17)">辛辣舔水 (神羅天徵)</span>
+  </div>
+
+  <div class="button-container">
+    <a href="index.html">回首頁</a>
+    <a href="https://sutian.moe.edu.tw/zh-hant/su/2653/" target="_blank">一袋米</a>
+  </div>
+
+  <script>
+    const characters = '比 筆 必 你 以 地 記 力 理 機 題 利 期 西 級 極 集 計 器 氣 繫 細 基 技 際 擊 績 季 議 醫 積 激 急 紀 跡 易 藝 異 意 億 益 衣 依 移 儀 遺 敵 弟 低 帝 底 第 提 體 麗 例 立 歷 離 黎 禮 密 秘 米 迷 謎 泥 逆 尼 擬 戚 欺 漆 啟 企 棄 旗 棋 奇 騎 齊 起 妻 棲 七 吸 悉 習 息 襲 洗 喜 戲 稀 析 溪 熙 希 昔 席 惜 夕 一 已 乙 皮 批 閉 避 幣 壁 碧 臂 鼻 彼 鄙 弊 敝 匹 辟 脾 疲 啤 痞 癖 屁 蜜 泌 祕 覓 滴 迪 笛 滌 狄 抵 邸 締 蒂 諦 遞 梯 踢 剔 題 啼 提 堤 妮 倪 霓 匿 暱 溺 膩 里 李 裡 禮 梨 釐 栗 勵 厲 隸 麗 幾 即 及 籍 疾 寂 棘 稽 雞 計 忌 寄 祭 劑 濟 繼 汽 泣 契 器 憩 緝 錫 熄 媳 璽 椅 怡 疑 遺 姨 宜 抑 逸 義 憶 毅 議 譯 翼 役 疫 亦 億 蓆 囍 洒 汐 隙 蹊 熹 犀 曦 犧 膝 嘻 嬉 僖 唏 淅 晰 皙 蜥 奚 樨 畸 飢 箕 肌 羈 躋 笄 屐 姬 饑 嘰 伋 汲 岌 笈 唧 嫉 楫 瘠 悸 暨 薺 霽 稷 髻 冀 驥 薊 覬 鯽 沏 柒 淒 悽 萋 圻 祈 岐 枝 歧 跂 祁 其 淇 琪 祺 騏 麒 崎 琦 錡 祇 衹 耆 鰭 畦 臍 乞 杞 豈 綺 砌 葺 磧 兮 烯 晞 窸 蟋 熠 懿 弈 奕 裔 曳 洩 屹 浥 挹 佚 軼 泄 蜴 佾 羿 翊 翌 溢 縊 臆 詣 肄 誼 翳 繹 驛 糜 麋 彌 瀰 獼 靡 謐 冪 宓 荻 柢 砥 詆 棣 娣 隄 緹 醍 蹄 鵜 剃 涕 倜 惕 屜 替 嚏 哩 狸 蜊 漓 璃 灕 籬 犛 藜 罹 驪 鸝 蠡 厘 俚 娌 鯉 醴 荔 粒 笠 蒞 吏 俐 琍 莉 痢 戾 唳 慄 篥 癘 礪 蠣 瀝 壢 櫪 靂 櫟 礫 儷 乩 犄 笈 偈 柒 霹 枇 琵 埤 媲 僻 譬 闢 咪 瞇 詫 鼺'.split(' ');
+
+    const table = document.getElementById('charTable');
+    const charCounter = document.getElementById('charCounter');
+    const audio = document.getElementById('bgMusic');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const seekBar = document.getElementById('seekBar');
+    const volumeBar = document.getElementById('volumeBar');
+    const timestamp = document.getElementById('timestamp');
+    const player = document.querySelector('.music-player');
+
+    // Lyrics timestamps (in seconds)
+    const lyricsTimestamps = [
+      { id: 'lyric1', time: 0.1, text: '一袋米要扛幾樓 (你們要去感受痛楚)' },
+      { id: 'lyric2', time: 2, text: '一袋米要扛二樓 (思考痛楚)' },
+      { id: 'lyric3', time: 4, text: '一袋米我給多嘞 (接受痛楚)' },
+      { id: 'lyric4', time: 6, text: '一袋米我洗嘞 (瞭解痛楚)' },
+      { id: 'lyric5', time: 8, text: '一袋米我洗了那麼多泥 (不了解痛楚的人)' },
+      { id: 'lyric6', time: 11, text: '紅豆弄黑挖嘎啦 (不可能會了解真正的和平)' },
+      { id: 'lyric7', time: 13, text: '顆顆有椅 (就是現在)' },
+      { id: 'lyric8', time: 15, text: '誰可以你一袋米喲 (讓這個世界感受痛楚吧)' },
+      { id: 'lyric9', time: 17, text: '辛辣舔水 (神羅天徵)' }
+    ];
+
+    function populateTable() {
+      let tableContent = '';
+      for (let i = 0; i < characters.length; i++) {
+        if (i % 10 === 0) tableContent += '<tr>';
+        tableContent += `<td onclick="speak('${characters[i]}')">${characters[i]}</td>`;
+        if ((i + 1) % 10 === 0) tableContent += '</tr>';
+      }
+      if (characters.length % 10 !== 0) tableContent += '</tr>';
+      table.innerHTML = tableContent;
+    }
+
+    function updateCharCounter() {
+      charCounter.textContent = `總字數：${characters.length}`;
+    }
+
+    function speak(char) {
+      const utterance = new SpeechSynthesisUtterance(char);
+      utterance.lang = 'zh-TW';
+      speechSynthesis.speak(utterance);
+      const popup = document.getElementById('popup');
+      popup.innerText = `正在發音：「${char}」`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 1000);
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = '⏸️';
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = '▶️';
+      }
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    // Update seek bar and timestamp
+    audio.addEventListener('timeupdate', () => {
+      seekBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+      timestamp.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+
+      // Highlight lyrics based on current time
+      const currentTime = audio.currentTime;
+      let activeLyric = null;
+
+      // Remove highlight from all lyrics
+      lyricsTimestamps.forEach(lyric => {
+        const element = document.getElementById(lyric.id);
+        if (element) element.classList.remove('highlight');
+      });
+
+      // Find the active lyric
+      for (let i = 0; i < lyricsTimestamps.length; i++) {
+        const lyric = lyricsTimestamps[i];
+        const nextLyric = lyricsTimestamps[i + 1];
+        const endTime = nextLyric ? nextLyric.time : audio.duration;
+        if (currentTime >= lyric.time && currentTime < endTime) {
+          activeLyric = lyric;
+          break;
+        }
+      }
+
+      // Apply highlight to active lyric
+      if (activeLyric) {
+        const element = document.getElementById(activeLyric.id);
+        if (element) element.classList.add('highlight');
+      }
+    });
+
+    // Seek to specific time when clicking seek bar
+    seekBar.addEventListener('input', () => {
+      audio.currentTime = (seekBar.value / 100) * audio.duration;
+    });
+
+    // Update volume
+    volumeBar.addEventListener('input', () => {
+      audio.volume = volumeBar.value;
+      volumeLevel.textContent = `${Math.round(volumeBar.value * 100)}%`;
+    });
+
+    // Seek to specific lyric time
+    function seekTo(time) {
+      audio.currentTime = time;
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = '⏸️';
+      }
+    }
+
+    // Show/hide music player based on scroll position
+    function checkScrollPosition() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const bodyHeight = document.body.offsetHeight;
+      const bottomThreshold = 100;
+
+      if (scrollY + windowHeight >= bodyHeight - bottomThreshold) {
+        player.classList.add('show');
+      } else {
+        player.classList.remove('show');
+      }
+    }
+
+    window.addEventListener('scroll', checkScrollPosition);
+    window.addEventListener('resize', checkScrollPosition);
+    window.addEventListener('load', checkScrollPosition);
+
+    // Initialize
+    populateTable();
+    updateCharCounter();
+  </script>
+</body>
+</html>
